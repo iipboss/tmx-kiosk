@@ -1,79 +1,303 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Three Mile Cross Bowling Club</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Three Mile Cross Bowling Club</title>
+  <style>
+    :root {
+      --club-sky: #289ccd;
+      --club-sky-light: #55b6de;
+      --club-gold: #efb23b;
+      --club-blue: #1f3f99;
+      --club-blue-light: #2852bf;
+      --panel: rgba(255, 255, 255, 0.96);
+      --text-dark: #17324d;
+      --text-soft: #4f6f8c;
+      --white: #ffffff;
+    }
 
-<style>
-body {
-  font-family: Arial, sans-serif;
-  text-align: center;
-  background: #289ccd;
-  color: white;
-  margin: 0;
-}
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-.container {
-  margin-top: 60px;
-}
+    html, body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: linear-gradient(180deg, var(--club-sky-light) 0%, var(--club-sky) 55%, #1f8bbb 100%);
+      color: var(--text-dark);
+    }
 
-h1 {
-  font-size: 36px;
-  margin-bottom: 40px;
-}
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      min-height: 100vh;
+    }
 
-button {
-  font-size: 22px;
-  padding: 20px;
-  margin: 20px;
-  width: 320px;
-  border-radius: 12px;
-  border: none;
-  background: #1f3f99;
-  color: white;
-}
+    .shell {
+      width: min(1100px, 96vw);
+      min-height: 94vh;
+      background: var(--panel);
+      border-radius: 34px;
+      border: 6px solid rgba(239, 178, 59, 0.35);
+      box-shadow: 0 22px 44px rgba(13, 43, 76, 0.18);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 26px 30px 24px;
+      overflow: hidden;
+    }
 
-button:hover {
-  background: #efb23b;
-  color: #1f3f99;
-}
-</style>
+    .header {
+      text-align: center;
+    }
 
-<script>
-let timer;
+    .logo {
+      width: clamp(150px, 18vw, 220px);
+      height: auto;
+      display: block;
+      margin: 0 auto 10px;
+    }
 
-function resetTimer(){
-  clearTimeout(timer);
-  timer = setTimeout(() => location.reload(), 180000);
-}
+    .welcome-pill {
+      display: inline-block;
+      padding: 10px 18px;
+      border-radius: 999px;
+      background: rgba(239, 178, 59, 0.18);
+      border: 2px solid rgba(239, 178, 59, 0.5);
+      color: var(--club-blue);
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      margin-bottom: 16px;
+    }
 
-function go(url){
-  resetTimer();
-  window.location.href = url;
-}
+    h1 {
+      margin: 0;
+      color: var(--club-blue);
+      font-size: clamp(2.3rem, 4.8vw, 4.2rem);
+      line-height: 1.08;
+    }
 
-document.onclick = resetTimer;
-window.onload = resetTimer;
-</script>
+    .subtitle {
+      margin: 16px auto 0;
+      max-width: 760px;
+      color: var(--text-soft);
+      font-size: clamp(1.05rem, 2vw, 1.35rem);
+      line-height: 1.5;
+    }
 
+    .button-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      margin: 30px 0 24px;
+    }
+
+    .option {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      min-height: 155px;
+      padding: 28px;
+      border-radius: 28px;
+      text-decoration: none;
+      color: var(--white);
+      background: linear-gradient(135deg, var(--club-blue) 0%, var(--club-blue-light) 100%);
+      box-shadow: 0 14px 28px rgba(31, 63, 153, 0.22);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      overflow: hidden;
+    }
+
+    .option::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.10), rgba(255,255,255,0));
+      pointer-events: none;
+    }
+
+    .option:hover,
+    .option:focus-visible,
+    .option:active {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 30px rgba(31, 63, 153, 0.28);
+      outline: 4px solid rgba(239, 178, 59, 0.45);
+      outline-offset: 3px;
+    }
+
+    .option-main {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      min-width: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .icon {
+      flex: 0 0 84px;
+      width: 84px;
+      height: 84px;
+      border-radius: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(239, 178, 59, 0.18);
+      border: 2px solid rgba(239, 178, 59, 0.38);
+      font-size: 2.2rem;
+    }
+
+    .option-copy {
+      min-width: 0;
+    }
+
+    .option-title {
+      margin: 0;
+      font-size: clamp(1.6rem, 2.8vw, 2.15rem);
+      font-weight: 800;
+      line-height: 1.15;
+    }
+
+    .option-text {
+      margin: 10px 0 0;
+      color: rgba(255,255,255,0.92);
+      font-size: clamp(1rem, 1.9vw, 1.2rem);
+      line-height: 1.45;
+    }
+
+    .arrow {
+      position: relative;
+      z-index: 1;
+      font-size: 2.4rem;
+      font-weight: 700;
+      opacity: 0.95;
+    }
+
+    .footer {
+      text-align: center;
+      color: var(--text-soft);
+      font-size: 1rem;
+      line-height: 1.45;
+      padding-top: 8px;
+    }
+
+    .countdown {
+      margin-top: 8px;
+      font-size: 0.95rem;
+      color: #7089a5;
+    }
+
+    @media (min-width: 860px) {
+      .button-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .option {
+        min-height: 290px;
+        justify-content: center;
+        text-align: center;
+      }
+
+      .option-main {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .arrow {
+        display: none;
+      }
+    }
+  </style>
 </head>
-
 <body>
+  <main class="shell">
+    <section class="header">
+      <img class="logo" src="data:image/png;base64,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" alt="Three Mile Cross Bowling Club logo" />
+      <div class="welcome-pill">Welcome</div>
+      <h1>Three Mile Cross Bowling Club</h1>
+      <p class="subtitle">Please tap one of the options below to continue.</p>
+    </section>
 
-<div class="container">
-  <h1>Welcome to Three Mile Cross Bowling Club</h1>
+    <section class="button-grid" aria-label="Welcome options">
+      <a class="option" href="https://www.tmxbowls.uk">
+        <div class="option-main">
+          <div class="icon" aria-hidden="true">🌐</div>
+          <div class="option-copy">
+            <p class="option-title">Visit Our Website</p>
+            <p class="option-text">Club information, fixtures, news and useful details.</p>
+          </div>
+        </div>
+        <div class="arrow" aria-hidden="true">›</div>
+      </a>
 
-  <button onclick="go('https://www.tmxbowls.uk')">
-    Visit Our Website
-  </button>
+      <a class="option" href="https://www.ourbias.co.uk/Account/Login">
+        <div class="option-main">
+          <div class="icon" aria-hidden="true">📅</div>
+          <div class="option-copy">
+            <p class="option-title">Online Booking System</p>
+            <p class="option-text">Access BIAS – Bowling-club Integrated Administration System.</p>
+          </div>
+        </div>
+        <div class="arrow" aria-hidden="true">›</div>
+      </a>
+    </section>
 
-  <br>
+    <footer class="footer">
+      Tap the screen to make your selection.
+      <div class="countdown" id="countdownText">This welcome screen resets after 3 minutes of inactivity.</div>
+    </footer>
+  </main>
 
-  <button onclick="go('https://www.ourbias.co.uk/Account/Login')">
-    Online Booking System (BIAS)
-  </button>
-</div>
+  <script>
+    const inactivityMs = 3 * 60 * 1000;
+    let inactivityTimer;
+    let countdownTimer;
+    let secondsRemaining = inactivityMs / 1000;
 
+    function goHome() {
+      window.location.href = window.location.origin + window.location.pathname;
+    }
+
+    function updateCountdown() {
+      const el = document.getElementById('countdownText');
+      if (!el) return;
+      const minutes = Math.floor(secondsRemaining / 60);
+      const seconds = secondsRemaining % 60;
+      el.textContent = `This welcome screen resets after 3 minutes of inactivity. Time remaining: ${minutes}:${String(seconds).padStart(2, '0')}`;
+    }
+
+    function startCountdown() {
+      clearInterval(countdownTimer);
+      secondsRemaining = inactivityMs / 1000;
+      updateCountdown();
+      countdownTimer = setInterval(() => {
+        secondsRemaining -= 1;
+        if (secondsRemaining < 0) {
+          clearInterval(countdownTimer);
+          return;
+        }
+        updateCountdown();
+      }, 1000);
+    }
+
+    function resetInactivityTimer() {
+      clearTimeout(inactivityTimer);
+      startCountdown();
+      inactivityTimer = setTimeout(goHome, inactivityMs);
+    }
+
+    ['touchstart', 'click', 'mousemove', 'keydown', 'scroll'].forEach((eventName) => {
+      document.addEventListener(eventName, resetInactivityTimer, { passive: true });
+    });
+
+    resetInactivityTimer();
+  </script>
 </body>
 </html>
